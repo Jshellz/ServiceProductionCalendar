@@ -3,17 +3,19 @@ package spc
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"net/http"
 	"strconv"
 )
 
-type holiday struct {
-	ID   string `json:"id"`
+type Holiday struct {
+	gorm.Model
+	ID   string `gorm:"primary_key" json:"id"`
 	Name string `json:"name"`
 	Data string `json:"data"`
 }
 
-var holidays = []holiday{
+var Holidays = []Holiday{
 	{ID: strconv.Itoa(1), Name: "Новый год", Data: "01.01.2024"},
 	{ID: strconv.Itoa(2), Name: "Новогодние каникулы", Data: "02.01.2024"},
 	{ID: strconv.Itoa(3), Name: "Новогодние каникулы", Data: "03.01.2024"},
@@ -31,22 +33,22 @@ var holidays = []holiday{
 }
 
 func GetHoliday(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, holidays)
+	c.IndentedJSON(http.StatusOK, Holidays)
 }
 
 func CreateHoliday(c *gin.Context) {
-	var newHoliday holiday
+	var newHoliday Holiday
 	if err := c.BindJSON(&newHoliday); err != nil {
 		return
 	}
 
-	holidays = append(holidays, newHoliday)
+	Holidays = append(Holidays, newHoliday)
 	c.IndentedJSON(http.StatusCreated, newHoliday)
 }
 
 func HolidayById(c *gin.Context) {
 	id := c.Param("id")
-	holidays, err := getBookById(id)
+	holidays, err := getHolidayById(id)
 
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "holiday not found"})
@@ -63,7 +65,7 @@ func CheckoutHoliday(c *gin.Context) {
 		return
 	}
 
-	holidays, err := getBookById(id)
+	holidays, err := getHolidayById(id)
 
 	if err != nil {
 		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "holiday not found"})
@@ -79,31 +81,32 @@ func CheckoutHoliday(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, holidays)
 }
 
-func DeleteHoliday(c *gin.Context) {
-	id, ok := c.GetQuery("id")
+//func DeleteHoliday(c *gin.Context) {
+//	id := c.Param("id")
+//
+//	if err := deleteHoliday(id); err != nil {
+//		c.JSON(http.StatusNotFound, gin.H{"error": "holiday not found"})
+//		return
+//	}
+//	c.JSON(http.StatusOK, gin.H{"message": "holiday deleted successfully"})
+//}
+//
+//func deleteHoliday(id string) error {
+//	exec := ""
+//	if exec != "" | delExec {
+//
+//	}
+//	return errors.New("failed to delete")
+//}
+//
+//func delExec(db gorm.DB) {
+//	db.Exec("DELETE FROM holidays WHERE id = $1", deleteHoliday("id"))
+//}
 
-	if !ok {
-		c.IndentedJSON(http.StatusBadRequest, gin.H{"message": "missing is query parameter"})
-		return
-	}
-
-	holidays, err := getBookById(id)
-
-	if err != nil {
-		c.IndentedJSON(http.StatusNotFound, gin.H{"message": "holiday not found"})
-		return
-	}
-
-	i := holidays
-	if i == holidays {
-		c.IndentedJSON(http.StatusOK, holidays)
-	}
-}
-
-func getBookById(id string) (*holiday, error) {
-	for i, h := range holidays {
+func getHolidayById(id string) (*Holiday, error) {
+	for i, h := range Holidays {
 		if h.ID == id {
-			return &holidays[i], nil
+			return &Holidays[i], nil
 		}
 	}
 	return nil, errors.New("holiday not found")

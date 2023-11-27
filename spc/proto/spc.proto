@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package main;
+
+option go_package = "/proto";
+
+service SPC {
+  rpc IsHoliday (HolidayRequest) returns (HolidayResponse);
+}
+
+message HolidayRequest {
+  int32 id = 1;
+  string name = 2;
+  string data = 3;
+}
+
+message HolidayResponse {
+  bool is_holiday = 1;
+  int32 holiday_id = 2;
+  string holiday_name = 3;
+  string holiday_data = 4;
+}

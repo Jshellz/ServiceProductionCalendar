@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.12.4
-// source: spc/spc.proto
+// source: proto/spc.proto
 
 package proto
 
@@ -22,7 +22,10 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SPCClient interface {
-	IsHoliday(ctx context.Context, in *HolidayRequest, opts ...grpc.CallOption) (*HolidayResponse, error)
+	GetHoliday(ctx context.Context, in *GetHolidayRequest, opts ...grpc.CallOption) (*GetHolidayResponse, error)
+	AddHoliday(ctx context.Context, in *AddHolidayRequest, opts ...grpc.CallOption) (*AddHolidayResponse, error)
+	EditHoliday(ctx context.Context, in *EditHolidayRequest, opts ...grpc.CallOption) (*EditHolidayResponse, error)
+	DeleteHoliday(ctx context.Context, in *DeleteHolidayRequest, opts ...grpc.CallOption) (*DeleteHolidayResponse, error)
 }
 
 type sPCClient struct {
@@ -33,9 +36,36 @@ func NewSPCClient(cc grpc.ClientConnInterface) SPCClient {
 	return &sPCClient{cc}
 }
 
-func (c *sPCClient) IsHoliday(ctx context.Context, in *HolidayRequest, opts ...grpc.CallOption) (*HolidayResponse, error) {
-	out := new(HolidayResponse)
-	err := c.cc.Invoke(ctx, "/main.SPC/IsHoliday", in, out, opts...)
+func (c *sPCClient) GetHoliday(ctx context.Context, in *GetHolidayRequest, opts ...grpc.CallOption) (*GetHolidayResponse, error) {
+	out := new(GetHolidayResponse)
+	err := c.cc.Invoke(ctx, "/main.SPC/GetHoliday", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sPCClient) AddHoliday(ctx context.Context, in *AddHolidayRequest, opts ...grpc.CallOption) (*AddHolidayResponse, error) {
+	out := new(AddHolidayResponse)
+	err := c.cc.Invoke(ctx, "/main.SPC/AddHoliday", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sPCClient) EditHoliday(ctx context.Context, in *EditHolidayRequest, opts ...grpc.CallOption) (*EditHolidayResponse, error) {
+	out := new(EditHolidayResponse)
+	err := c.cc.Invoke(ctx, "/main.SPC/EditHoliday", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sPCClient) DeleteHoliday(ctx context.Context, in *DeleteHolidayRequest, opts ...grpc.CallOption) (*DeleteHolidayResponse, error) {
+	out := new(DeleteHolidayResponse)
+	err := c.cc.Invoke(ctx, "/main.SPC/DeleteHoliday", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +76,10 @@ func (c *sPCClient) IsHoliday(ctx context.Context, in *HolidayRequest, opts ...g
 // All implementations must embed UnimplementedSPCServer
 // for forward compatibility
 type SPCServer interface {
-	IsHoliday(context.Context, *HolidayRequest) (*HolidayResponse, error)
+	GetHoliday(context.Context, *GetHolidayRequest) (*GetHolidayResponse, error)
+	AddHoliday(context.Context, *AddHolidayRequest) (*AddHolidayResponse, error)
+	EditHoliday(context.Context, *EditHolidayRequest) (*EditHolidayResponse, error)
+	DeleteHoliday(context.Context, *DeleteHolidayRequest) (*DeleteHolidayResponse, error)
 	mustEmbedUnimplementedSPCServer()
 }
 
@@ -54,8 +87,17 @@ type SPCServer interface {
 type UnimplementedSPCServer struct {
 }
 
-func (UnimplementedSPCServer) IsHoliday(context.Context, *HolidayRequest) (*HolidayResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method IsHoliday not implemented")
+func (UnimplementedSPCServer) GetHoliday(context.Context, *GetHolidayRequest) (*GetHolidayResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHoliday not implemented")
+}
+func (UnimplementedSPCServer) AddHoliday(context.Context, *AddHolidayRequest) (*AddHolidayResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AddHoliday not implemented")
+}
+func (UnimplementedSPCServer) EditHoliday(context.Context, *EditHolidayRequest) (*EditHolidayResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method EditHoliday not implemented")
+}
+func (UnimplementedSPCServer) DeleteHoliday(context.Context, *DeleteHolidayRequest) (*DeleteHolidayResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteHoliday not implemented")
 }
 func (UnimplementedSPCServer) mustEmbedUnimplementedSPCServer() {}
 
@@ -70,20 +112,74 @@ func RegisterSPCServer(s grpc.ServiceRegistrar, srv SPCServer) {
 	s.RegisterService(&SPC_ServiceDesc, srv)
 }
 
-func _SPC_IsHoliday_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HolidayRequest)
+func _SPC_GetHoliday_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetHolidayRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(SPCServer).IsHoliday(ctx, in)
+		return srv.(SPCServer).GetHoliday(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/main.SPC/IsHoliday",
+		FullMethod: "/main.SPC/GetHoliday",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SPCServer).IsHoliday(ctx, req.(*HolidayRequest))
+		return srv.(SPCServer).GetHoliday(ctx, req.(*GetHolidayRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SPC_AddHoliday_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AddHolidayRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SPCServer).AddHoliday(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.SPC/AddHoliday",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SPCServer).AddHoliday(ctx, req.(*AddHolidayRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SPC_EditHoliday_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EditHolidayRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SPCServer).EditHoliday(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.SPC/EditHoliday",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SPCServer).EditHoliday(ctx, req.(*EditHolidayRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SPC_DeleteHoliday_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteHolidayRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SPCServer).DeleteHoliday(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/main.SPC/DeleteHoliday",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SPCServer).DeleteHoliday(ctx, req.(*DeleteHolidayRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,10 +192,22 @@ var SPC_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SPCServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "IsHoliday",
-			Handler:    _SPC_IsHoliday_Handler,
+			MethodName: "GetHoliday",
+			Handler:    _SPC_GetHoliday_Handler,
+		},
+		{
+			MethodName: "AddHoliday",
+			Handler:    _SPC_AddHoliday_Handler,
+		},
+		{
+			MethodName: "EditHoliday",
+			Handler:    _SPC_EditHoliday_Handler,
+		},
+		{
+			MethodName: "DeleteHoliday",
+			Handler:    _SPC_DeleteHoliday_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "spc/spc.proto",
+	Metadata: "proto/spc.proto",
 }

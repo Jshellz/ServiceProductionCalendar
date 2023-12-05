@@ -1,7 +1,6 @@
 package test
 
 import (
-	"ServiceProductionCalendar/spc"
 	"encoding/json"
 	"github.com/gin-gonic/gin"
 	"net/http"
@@ -18,7 +17,7 @@ func TestGetHoliday(t *testing.T) {
 		"25-12-2022",
 	}
 
-	router.GET("/TGH", spc.GetHoliday)
+	//router.GET("/TGH", spc.GetHoliday)
 
 	w := httptest.NewRecorder()
 

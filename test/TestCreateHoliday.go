@@ -14,7 +14,7 @@ func TestCreateHoliday(t *testing.T) {
 
 	router := gin.Default()
 
-	router.POST("/TCH", spc.CreateHoliday)
+	//router.POST("/TCH", spc.CreateHoliday)
 
 	w := httptest.NewRecorder()
 

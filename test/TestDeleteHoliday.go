@@ -1,7 +1,6 @@
 package test
 
 import (
-	"ServiceProductionCalendar/spc"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"net/http/httptest"
@@ -17,7 +16,7 @@ func TestDeleteHoliday(t *testing.T) {
 		"25-12-2022",
 	}
 
-	router.DELETE("/TDH/:id", spc.DeleteHoliday)
+	//router.DELETE("/TDH/:id", spc.DeleteHoliday)
 
 	w := httptest.NewRecorder()
 

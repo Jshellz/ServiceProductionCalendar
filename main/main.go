@@ -19,16 +19,13 @@ const (
 	network       = "tcp"
 	address       = ":50051"
 	addressClient = "localhost:50051"
-)
-
-const (
-	defaultName = "День к новому году"
-	defaultDate = "31.12.2023"
+	defaultName   = "День к новому году"
+	defaultDate   = "31.12.2023"
 )
 
 func main() {
 
-	runJSON()
+	//runJSON()
 	serverRPC()
 	clientRPC()
 	runBD()
@@ -52,11 +49,11 @@ func runBD() {
 
 func runJSON() {
 	r := gin.Default()
-	r.GET("/", spc.GetHoliday)
-	r.POST("/holiday_create", spc.CreateHoliday)
-	r.GET("/holiday/:id", spc.HolidayById)
-	r.PATCH("/checkout_holiday", spc.CheckoutHoliday)
-	r.DELETE("/holiday/:id", spc.DeleteHoliday)
+	//r.GET("/", spc.GetHoliday)
+	//r.POST("/holiday_create", spc.CreateHoliday)
+	//r.GET("/holiday/:id", spc.HolidayById)
+	//r.PATCH("/checkout_holiday", spc.CheckoutHoliday)
+	//r.DELETE("/holiday/:id", spc.DeleteHoliday)
 	log.Fatal(r.Run("localhost:8080"))
 }
 
@@ -77,10 +74,10 @@ func serverRPC() {
 }
 
 func clientRPC() {
-	conn, errs := grpc.Dial(addressClient, grpc.WithInsecure(), grpc.WithBlock())
+	conn, err := grpc.Dial(addressClient, grpc.WithInsecure(), grpc.WithBlock())
 
-	if errs != nil {
-		log.Fatalf("Failed to connect: %v", errs)
+	if err != nil {
+		log.Fatalf("Failed to connect: %v", err)
 	}
 
 	defer conn.Close()
@@ -93,10 +90,10 @@ func clientRPC() {
 
 	holidayName := defaultName
 	holidayDate := defaultDate
-	r, errss := c.AddHoliday(ctx, &pb.AddHolidayRequest{Name: holidayName, Data: holidayDate})
+	r, err := c.AddHoliday(ctx, &pb.AddHolidayRequest{Name: holidayName, Data: holidayDate})
 
-	if errss != nil {
-		log.Fatalf("Error when calling AddHoliday: %v", errss)
+	if err != nil {
+		log.Fatalf("Error when calling AddHoliday: %v", err)
 	}
 
 	fmt.Printf("Response from server: %s and %s\n", r.HolidayName, r.HolidayData)

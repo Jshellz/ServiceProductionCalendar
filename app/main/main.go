@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ServiceProductionCalendar/spc"
-	pb "ServiceProductionCalendar/spc/proto"
+	"ServiceProductionCalendar/app/main/spc"
+	proto2 "ServiceProductionCalendar/app/main/spc/proto"
 	"context"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -65,7 +65,7 @@ func serverRPC() {
 	}
 
 	s := grpc.NewServer()
-	pb.RegisterSPCServer(s, &spc.Server{})
+	proto2.RegisterSPCServer(s, &spc.Server{})
 	reflection.Register(s)
 
 	if err := s.Serve(lis); err != nil {
@@ -82,7 +82,7 @@ func clientRPC() {
 
 	defer conn.Close()
 
-	c := pb.NewSPCClient(conn)
+	c := proto2.NewSPCClient(conn)
 
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second)
 
@@ -90,7 +90,7 @@ func clientRPC() {
 
 	holidayName := defaultName
 	holidayDate := defaultDate
-	r, err := c.AddHoliday(ctx, &pb.AddHolidayRequest{Name: holidayName, Data: holidayDate})
+	r, err := c.AddHoliday(ctx, &proto2.AddHolidayRequest{Name: holidayName, Data: holidayDate})
 
 	if err != nil {
 		log.Fatalf("Error when calling AddHoliday: %v", err)

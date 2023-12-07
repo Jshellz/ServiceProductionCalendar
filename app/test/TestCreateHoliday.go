@@ -1,7 +1,7 @@
 package test
 
 import (
-	"ServiceProductionCalendar/spc"
+	"ServiceProductionCalendar/app/main/spc"
 	"bytes"
 	"encoding/json"
 	"github.com/gin-gonic/gin"

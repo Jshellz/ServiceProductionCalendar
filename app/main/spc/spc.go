@@ -4,6 +4,8 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
+	"html/template"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -55,9 +57,34 @@ var Holidays = []Holiday{
 	{ID: strconv.Itoa(14), Name: "День народного единства", Date: time.Date(year, time.November, dayNov, hour, min, sec, nsec, time.Local)},
 }
 
+type CalendarService struct {
+	Holiday
+}
+
 // GetHoliday получение всех праздников
 func GetHoliday(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, Holidays)
+	h := connTmpl
+	c.IndentedJSON(http.StatusOK, h)
+
+}
+
+type tmpl struct {
+	Title    string
+	holidays *Holiday
+}
+
+func connTmpl(w http.ResponseWriter, _ *http.Request) (h *Holiday, templates tmpl) {
+
+	templates = tmpl{Title: "SPC", holidays: h}
+
+	tmpl, err := template.ParseFiles("templates/index.html")
+	if err != nil {
+		return nil, templates
+	}
+
+	log.Fatal(tmpl.Execute(w, Holidays), templates)
+	return h, templates
 }
 
 // CreateHoliday создание праздника
@@ -132,15 +159,6 @@ func deleteHoliday(id string) error {
 // запрос на удаление из бд
 func delExec(db gorm.DB) {
 	db.Exec("DELETE FROM holidays WHERE id = $1", deleteHoliday("id"))
-}
-
-func getHolidayByIdForDelete(id string) (*Holiday, error) {
-	for i, h := range Holidays {
-		if h.ID == id {
-			return &Holidays[i], nil
-		}
-	}
-	return nil, errors.New("holiday not found")
 }
 
 func getHolidayById(id string) (*Holiday, error) {

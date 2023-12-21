@@ -1,0 +1,49 @@
+name: ServiceProductionCalendar CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.21
+
+      - name: Cache Go modules
+        uses: actions/cache@v2
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.mod') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Get dependencies
+        run: go get -v -t -d ./...
+
+      - name: Build and test
+        run: go test -v ./...
+
+      - name: Build Docker image
+        run: docker build -t gcr.io/ServiceProductionCalendar/production-calendar-service .
+
+      - name: Push Docker image to Google Container Registry
+        run: docker push gcr.io/ServiceProductionCalendar/production-calendar-service
+
+#      - name: Set up kubectl
+#        uses: azure/setup-kubectl@v1
+#        with:
+#          kubeconfig: ${{ secrets.KUBE_CONFIG }}
+#
+#      - name: Deploy to Kubernetes
+#        run: |
+#          kubectl apply -f k8s/production/deployment.yaml
+#          kubectl apply -f k8s/production/service.yaml

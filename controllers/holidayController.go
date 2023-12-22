@@ -4,7 +4,6 @@ import (
 	"ServiceProductionCalendar/initializers"
 	"ServiceProductionCalendar/models"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 	"net/http"
 	"time"
 )
@@ -38,10 +37,8 @@ func GetAllHoliday(c *gin.Context) {
 }
 
 func GetHoliday(c *gin.Context) {
-	var holiday models.Holiday
-	var db *gorm.DB
-	db.First(&holiday)
-	c.IndentedJSON(http.StatusOK, db)
+	id := c.Param("id")
+	c.IndentedJSON(http.StatusOK, id)
 }
 func UpdateHoliday(c *gin.Context) {}
 func DeleteHoliday(c *gin.Context) {}

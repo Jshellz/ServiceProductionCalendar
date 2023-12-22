@@ -16,8 +16,8 @@ func main() {
 
 	r := gin.Default()
 	r.POST("/createHoliday", controllers.HolidayCreate)
-	r.GET("/getHoliday")
-	r.GET("/getHoliday/:id")
+	r.GET("/getAllHoliday", controllers.GetAllHoliday)
+	r.GET("/getHoliday/:id", controllers.GetHoliday)
 	r.PATCH("/updateHoliday")
 	r.DELETE("/deleteHoliday/:id")
 

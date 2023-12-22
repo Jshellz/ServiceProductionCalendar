@@ -7,8 +7,9 @@ import (
 
 type Holiday struct {
 	gorm.Model
-	Name string
-	Date time.Time
+	ID   int       `gorm:"primaryKey" json:"id"`
+	Name string    `json:"name"`
+	Date time.Time `json:"date"`
 }
 
 func rewriteYear() {
@@ -56,19 +57,19 @@ var (
 	nationalUnityDay           = "День народного единства"
 )
 
-var holidays = []Holiday{
-	{Name: newYear, Date: time.Date(year, time.January, dayJONe, hour, minute, sec, nSec, time.Local)},
-	{Name: newYearHoliday, Date: time.Date(year, time.January, dayJTwo, hour, minute, sec, nSec, time.Local)},
-	{Name: newYearHoliday, Date: time.Date(year, time.January, dayJThree, hour, minute, sec, nSec, time.Local)},
-	{Name: newYearHoliday, Date: time.Date(year, time.January, dayJFour, hour, minute, sec, nSec, time.Local)},
-	{Name: newYearHoliday, Date: time.Date(year, time.January, dayJFive, hour, minute, sec, nSec, time.Local)},
-	{Name: newYearHoliday, Date: time.Date(year, time.January, dayJSix, hour, minute, sec, nSec, time.Local)},
-	{Name: nativity, Date: time.Date(year, time.January, dayJR, hour, minute, sec, nSec, time.Local)},
-	{Name: newYearHoliday, Date: time.Date(year, time.January, dayJEight, hour, minute, sec, nSec, time.Local)},
-	{Name: defenderOfTheFatherlandDay, Date: time.Date(year, time.February, dayF, hour, minute, sec, nSec, time.Local)},
-	{Name: internationalWomenDay, Date: time.Date(year, time.March, dayM, hour, minute, sec, nSec, time.Local)},
-	{Name: labourDay, Date: time.Date(year, time.May, dayMayOne, hour, minute, sec, nSec, time.Local)},
-	{Name: victoryDay, Date: time.Date(year, time.May, dayMayNine, hour, minute, sec, nSec, time.Local)},
-	{Name: russiaDay, Date: time.Date(year, time.June, dayJun, hour, minute, sec, nSec, time.Local)},
-	{Name: nationalUnityDay, Date: time.Date(year, time.November, dayNov, hour, minute, sec, nSec, time.Local)},
+var Holidays = []Holiday{
+	{ID: 1, Name: newYear, Date: time.Date(year, time.January, dayJONe, hour, minute, sec, nSec, time.Local)},
+	{ID: 2, Name: newYearHoliday, Date: time.Date(year, time.January, dayJTwo, hour, minute, sec, nSec, time.Local)},
+	{ID: 3, Name: newYearHoliday, Date: time.Date(year, time.January, dayJThree, hour, minute, sec, nSec, time.Local)},
+	{ID: 4, Name: newYearHoliday, Date: time.Date(year, time.January, dayJFour, hour, minute, sec, nSec, time.Local)},
+	{ID: 5, Name: newYearHoliday, Date: time.Date(year, time.January, dayJFive, hour, minute, sec, nSec, time.Local)},
+	{ID: 6, Name: newYearHoliday, Date: time.Date(year, time.January, dayJSix, hour, minute, sec, nSec, time.Local)},
+	{ID: 7, Name: nativity, Date: time.Date(year, time.January, dayJR, hour, minute, sec, nSec, time.Local)},
+	{ID: 8, Name: newYearHoliday, Date: time.Date(year, time.January, dayJEight, hour, minute, sec, nSec, time.Local)},
+	{ID: 9, Name: defenderOfTheFatherlandDay, Date: time.Date(year, time.February, dayF, hour, minute, sec, nSec, time.Local)},
+	{ID: 10, Name: internationalWomenDay, Date: time.Date(year, time.March, dayM, hour, minute, sec, nSec, time.Local)},
+	{ID: 11, Name: labourDay, Date: time.Date(year, time.May, dayMayOne, hour, minute, sec, nSec, time.Local)},
+	{ID: 12, Name: victoryDay, Date: time.Date(year, time.May, dayMayNine, hour, minute, sec, nSec, time.Local)},
+	{ID: 13, Name: russiaDay, Date: time.Date(year, time.June, dayJun, hour, minute, sec, nSec, time.Local)},
+	{ID: 14, Name: nationalUnityDay, Date: time.Date(year, time.November, dayNov, hour, minute, sec, nSec, time.Local)},
 }

@@ -18,8 +18,8 @@ func main() {
 	r.POST("/createHoliday", controllers.HolidayCreate)
 	r.GET("/getAllHoliday", controllers.GetAllHoliday)
 	r.GET("/getHoliday/:id", controllers.GetHoliday)
-	r.PATCH("/updateHoliday")
-	r.DELETE("/deleteHoliday/:id")
+	r.PATCH("/updateHoliday", controllers.UpdateHoliday)
+	r.DELETE("/deleteHoliday/:id", controllers.DeleteHoliday)
 
 	log.Fatal(r.Run())
 }

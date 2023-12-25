@@ -4,49 +4,67 @@ package main;
 
 option go_package = "/proto";
 
-service SPC {
+service ServiceProductionCalendar {
+  rpc GetAllHoliday (GetAllHolidayRequest) returns (GetAllHolidayResponse);
   rpc GetHoliday (GetHolidayRequest) returns (GetHolidayResponse);
-  rpc AddHoliday (AddHolidayRequest) returns (AddHolidayResponse);
-  rpc EditHoliday (EditHolidayRequest) returns (EditHolidayResponse);
+  rpc HolidayCreate (AddHolidayRequest) returns (AddHolidayResponse);
+  rpc UpdateHoliday (EditHolidayRequest) returns (EditHolidayResponse);
   rpc DeleteHoliday (DeleteHolidayRequest) returns (DeleteHolidayResponse);
 }
 
-message GetHolidayRequest {
-  string id = 1;
+message GetAllHolidayRequest {
+  int32 id = 1;
   string name = 2;
   string data = 3;
 }
+
+message GetAllHolidayResponse {
+  repeated int32 id = 1;
+  repeated string name = 2;
+  repeated string data = 3;
+}
+
+message GetHolidayRequest {
+  int32 id = 1;
+  string name = 2;
+  string data = 3;
+}
+
 message GetHolidayResponse {
-  string holiday_id = 1;
-  string holiday_name = 2;
-  string holiday_data = 3;
+  int32 id = 1;
+  string name = 2;
+  string data = 3;
 }
 
 message AddHolidayRequest {
-  string name = 1;
-  string data = 2;
-}
-message AddHolidayResponse {
-  string holiday_name = 1;
-  string holiday_data = 2;
-}
-
-message EditHolidayRequest {
-  string name = 1;
-  string data = 2;
-}
-message EditHolidayResponse {
-  string holiday_name = 1;
-  string holiday_data = 2;
-}
-
-message DeleteHolidayRequest {
-  string id = 1;
+  int32 id = 1;
   string name = 2;
   string data = 3;
 }
+
+message AddHolidayResponse {
+  string name = 1;
+  string data = 2;
+}
+
+message EditHolidayRequest {
+  int32 id = 1;
+  string name = 2;
+  string data = 3;
+}
+
+message EditHolidayResponse {
+  int32 id = 1;
+  string name = 2;
+  string data = 3;
+}
+
+message DeleteHolidayRequest {
+  int32 id = 1;
+  string name = 2;
+}
+
 message DeleteHolidayResponse {
-  string holiday_id = 1;
-  string holiday_name = 2;
-  string holiday_data = 3;
+  int32 id = 1;
+  string name = 2;
 }

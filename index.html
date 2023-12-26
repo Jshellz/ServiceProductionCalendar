@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ServiceProductionCalendar</title>
+</head>
+<body>
+{{ range .Holidays }}
+<p> {{ .Name }} - {{ .Date }} </p>
+{{ end }}
+</body>
+</html>

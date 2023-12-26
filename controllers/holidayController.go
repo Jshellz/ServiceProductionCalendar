@@ -4,6 +4,7 @@ import (
 	"ServiceProductionCalendar/initializers"
 	"ServiceProductionCalendar/models"
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"time"
 )
@@ -40,5 +41,43 @@ func GetHoliday(c *gin.Context) {
 	id := c.Param("id")
 	c.IndentedJSON(http.StatusOK, id)
 }
-func UpdateHoliday(c *gin.Context) {}
-func DeleteHoliday(c *gin.Context) {}
+
+func UpdateHoliday(c *gin.Context) {
+	id := c.Param("id")
+
+	var body struct {
+		Name string
+		Date time.Time
+	}
+
+	err := c.Bind(&body)
+	if err != nil {
+		return
+	}
+
+	var holiday models.Holiday
+
+	initializers.DB.First(&holiday, id)
+
+	//holiday.ID = body.ID
+	holiday.Name = body.Name
+	holiday.Date = body.Date
+
+	initializers.DB.Save(&holiday)
+
+	c.JSON(http.StatusOK, &holiday)
+}
+
+func DeleteHoliday(c *gin.Context) {
+	id := c.Param("id")
+	var holiday models.Holiday
+
+	if result := initializers.DB.First(&holiday, id); result.Error != nil {
+		log.Fatal(c.AbortWithError(http.StatusNotFound, result.Error))
+		return
+	}
+
+	initializers.DB.Delete(&holiday)
+
+	c.Status(http.StatusOK)
+}

@@ -22,4 +22,14 @@ func main() {
 	r.DELETE("/deleteHoliday/:id", controllers.DeleteHoliday)
 
 	log.Fatal(r.Run())
+
+	//h1 := func(w http.ResponseWriter, r *http.Request) {
+	//	teml := template.Must(template.ParseFiles("index.html"))
+	//	testHoliday := models.Holidays
+	//
+	//	teml.Execute(w, testHoliday)
+	//}
+	//
+	//http.HandleFunc("/", h1)
+	//http.ListenAndServe("localhost:8080", nil)
 }

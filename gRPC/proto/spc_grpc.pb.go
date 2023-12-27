@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v3.12.4
-// source: rpc/spc.proto
+// source: gRPC/spc.proto
 
 package proto
 
@@ -246,5 +246,5 @@ var ServiceProductionCalendar_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "rpc/spc.proto",
+	Metadata: "gRPC/spc.proto",
 }

@@ -1,8 +1,6 @@
 syntax = "proto3";
 
-package main;
-
-option go_package = "/proto";
+option go_package = "/ServiceProductionCalendar/gRPC/proto";
 
 service ServiceProductionCalendar {
   rpc GetAllHoliday (GetAllHolidayRequest) returns (GetAllHolidayResponse);
@@ -12,10 +10,14 @@ service ServiceProductionCalendar {
   rpc DeleteHoliday (DeleteHolidayRequest) returns (DeleteHolidayResponse);
 }
 
-message GetAllHolidayRequest {
+message HolidayRequest {
   int32 id = 1;
   string name = 2;
   string data = 3;
+}
+
+message GetAllHolidayRequest {
+    HolidayRequest HolReq = 1;
 }
 
 message GetAllHolidayResponse {
@@ -25,9 +27,7 @@ message GetAllHolidayResponse {
 }
 
 message GetHolidayRequest {
-  int32 id = 1;
-  string name = 2;
-  string data = 3;
+  HolidayRequest HolReq = 1;
 }
 
 message GetHolidayResponse {

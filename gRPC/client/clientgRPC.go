@@ -1,7 +1,7 @@
 package main
 
 import (
-	pb "ServiceProductionCalendar/rpc/proto"
+	"ServiceProductionCalendar/gRPC/proto"
 	"context"
 	"google.golang.org/grpc"
 	"log"
@@ -16,9 +16,15 @@ func main() {
 	}
 	defer log.Fatal(conn.Close())
 
-	client := pb.NewServiceProductionCalendarClient(conn)
+	client := proto.NewServiceProductionCalendarClient(conn)
 
-	reqTest := &pb.AddHolidayRequest{Id: 1, Name: "test", Data: "2023:12:31"}
+	var body struct {
+		ID   int32
+		Name string
+		Date string
+	}
+
+	reqTest := &proto.AddHolidayRequest{Id: body.ID, Name: body.Name, Data: body.Date}
 	res, err := client.HolidayCreate(context.Background(), reqTest)
 	if err != nil {
 		log.Fatalf("failed to call AddHolidayRequest: %v", err)

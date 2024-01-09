@@ -1,15 +1,23 @@
 package proto
 
-import "context"
+import (
+	"context"
+	"fmt"
+)
 
-type SPC struct{}
+// SPC Methods
+
+type SPC struct {
+	ServiceProductionCalendarServer
+}
 
 func (s *SPC) GetAllHoliday(ctx context.Context, req *GetAllHolidayRequest) (*GetAllHolidayResponse, error) {
 	var body struct {
-		Id   []int32
-		Name []string
-		Data []string
+		Id   int32
+		Name string
+		Data string
 	}
+
 	return &GetAllHolidayResponse{
 		Id:   body.Id,
 		Name: body.Name,
@@ -18,26 +26,38 @@ func (s *SPC) GetAllHoliday(ctx context.Context, req *GetAllHolidayRequest) (*Ge
 }
 
 func (s *SPC) GetHoliday(ctx context.Context, req *GetHolidayRequest) (*GetHolidayResponse, error) {
-	var body struct {
-		Id   int32
-		Name string
-		Data string
-	}
+	//var body struct {
+	//	Id   int32
+	//	Name string
+	//	Data string
+	//}
+	//return &GetHolidayResponse{
+	//	Id:   body.Id,
+	//	Name: body.Name,
+	//	Data: body.Data,
+	//}, nil
+
+	// Test
 	return &GetHolidayResponse{
-		Id:   body.Id,
-		Name: body.Name,
-		Data: body.Data,
+		Name: fmt.Sprintf("Test value %s", req.Name),
+		Data: fmt.Sprintf("Test value %s", req.Data),
 	}, nil
 }
 
 func (s *SPC) HolidayCreate(ctx context.Context, req *AddHolidayRequest) (*AddHolidayResponse, error) {
-	var body struct {
-		Name string
-		Data string
-	}
+	//var body struct {
+	//	Name string
+	//	Data string
+	//}
+	//return &AddHolidayResponse{
+	//	Name: body.Name,
+	//	Data: body.Data,
+	//}, nil
+
+	// Test
 	return &AddHolidayResponse{
-		Name: body.Name,
-		Data: body.Data,
+		Name: fmt.Sprintf("Test value %s", req.Name),
+		Data: fmt.Sprintf("Test value %s", req.Data),
 	}, nil
 }
 

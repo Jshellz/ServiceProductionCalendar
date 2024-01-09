@@ -17,17 +17,21 @@ message HolidayRequest {
 }
 
 message GetAllHolidayRequest {
-    HolidayRequest HolReq = 1;
+  int32 id = 1;
+  string name = 2;
+  string data = 3;
 }
 
 message GetAllHolidayResponse {
-  repeated int32 id = 1;
-  repeated string name = 2;
-  repeated string data = 3;
+  int32 id = 1;
+  string name = 2;
+  string data = 3;
 }
 
 message GetHolidayRequest {
-  HolidayRequest HolReq = 1;
+  int32 id = 1;
+  string name = 2;
+  string data = 3;
 }
 
 message GetHolidayResponse {
@@ -43,8 +47,8 @@ message AddHolidayRequest {
 }
 
 message AddHolidayResponse {
-  string name = 1;
-  string data = 2;
+  string name = 2;
+  string data = 3;
 }
 
 message EditHolidayRequest {

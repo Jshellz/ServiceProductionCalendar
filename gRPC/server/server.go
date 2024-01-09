@@ -12,8 +12,7 @@ const (
 	address = ":50051"
 )
 
-var spcHoliday = proto.SPC{}
-
+// Server gRPC
 func main() {
 	lis, err := net.Listen(network, address)
 	if err != nil {
@@ -21,7 +20,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
-	proto.RegisterServiceProductionCalendarServer(s, &spcHoliday)
+	proto.RegisterServiceProductionCalendarServer(s, &proto.SPC{})
 
 	log.Printf("Server listening on %s", lis)
 	if err := s.Serve(lis); err != nil {

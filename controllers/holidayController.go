@@ -9,6 +9,8 @@ import (
 	"time"
 )
 
+const id = "id"
+
 func HolidayCreate(c *gin.Context) {
 
 	var body struct {
@@ -38,12 +40,12 @@ func GetAllHoliday(c *gin.Context) {
 }
 
 func GetHoliday(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param(id)
 	c.IndentedJSON(http.StatusOK, id)
 }
 
 func UpdateHoliday(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param(id)
 
 	var body struct {
 		Name string
@@ -69,7 +71,7 @@ func UpdateHoliday(c *gin.Context) {
 }
 
 func DeleteHoliday(c *gin.Context) {
-	id := c.Param("id")
+	id := c.Param(id)
 	var holiday models.Holiday
 
 	if result := initializers.DB.First(&holiday, id); result.Error != nil {

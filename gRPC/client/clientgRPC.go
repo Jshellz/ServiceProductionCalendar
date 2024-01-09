@@ -14,21 +14,33 @@ func main() {
 	if err != nil {
 		log.Fatalf("failed to connect: %v", err)
 	}
-	defer log.Fatal(conn.Close())
 
 	client := proto.NewServiceProductionCalendarClient(conn)
 
-	var body struct {
-		ID   int32
-		Name string
-		Date string
-	}
+	//var body struct {
+	//	ID   int32
+	//	Name string
+	//	Date string
+	//}
 
-	reqTest := &proto.AddHolidayRequest{Id: body.ID, Name: body.Name, Data: body.Date}
+	reqTest := &proto.AddHolidayRequest{Id: 1, Name: "test", Data: "10.10.1010"}
+	//reqTest := &proto.GetAllHolidayRequest{}
+	respTest, err := client.HolidayCreate(context.Background(), reqTest)
+	//respTest, err := client.GetAllHoliday(context.Background(), reqTest)
+	if err != nil {
+		log.Fatalf("failed to add holiday: %v", err)
+	}
+	log.Println(respTest)
+
 	res, err := client.HolidayCreate(context.Background(), reqTest)
+	//res, err := client.GetAllHoliday(context.Background(), reqTest)
 	if err != nil {
 		log.Fatalf("failed to call AddHolidayRequest: %v", err)
 	}
 
 	log.Printf("AddHolidayRequest: %v %v", res.Name, res.Data)
+
+	if conn != nil {
+		log.Fatal(conn.Close())
+	}
 }

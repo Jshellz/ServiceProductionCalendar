@@ -6,10 +6,13 @@ import (
 )
 
 type Holiday struct {
-	gorm.Model
-	ID   int       `gorm:"primaryKey" json:"id"`
-	Name string    `json:"name"`
-	Date time.Time `json:"date"`
+	//gorm.Model
+	ID       int            `gorm:"primaryKey" json:"id"`
+	Name     string         `json:"name"`
+	Date     time.Time      `json:"date"`
+	CreateAt time.Time      `gorm:"createAt"`
+	UpdateAt time.Time      `gorm:"updateAt"`
+	DeleteAt gorm.DeletedAt `gorm:"deleteAt"`
 }
 
 func rewriteYear() {

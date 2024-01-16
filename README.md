@@ -1,13 +1,12 @@
-# Сервис производственного календаря (Service production calendar)
+# Service production calendar
 
-## Для запуска сервиса календаря надо:
-1. Установить Go -> https://go.dev/doc/install
-2. Установить GoLang -> https://www.jetbrains.com/go/
-3. Установить демон запуска -> https://github.com/Jshellz/CompileDaemon
-4. Установить cloudDB -> https://tableplus.com/ и https://console.neon.tech/
-5. Установить Postman -> https://www.postman.com/
-6. В рабочей директории в терминате вставте -> CompileDaemon -command="./ServiceProductionCalendar", запуститься локально
-   ![Вот такое отображать должно](/image/photo_comp_demon.png)
-7. После откройте устновленый https://tableplus.com/, и вставте DB_URL который находиться в .env либо сосздайте свой тут -> https://console.neon.tech/ и поменяйте DB_URL в .env на свой
-8. Запросы создавайте в https://www.postman.com/
-
+## To start the calendar service you need to:
+1. Install Go -> https://go.dev/doc/install
+2. Install GoLang -> https://www.jetbrains.com/go/
+3. Install the launch daemon -> https://github.com/Jshellz/CompileDaemon
+4. Install cloudDB -> https://tableplus.com/ and https://console.neon.tech/
+5. Install Postman -> https://www.postman.com/
+6. In the working directory in the terminal, insert -> CompileDaemon -command="./ServiceProductionCalendar", run locally
+   ![This is what should be displayed](/image/photo_comp_demon.png)
+7. Then open the installed https://tableplus.com/, and insert the DB_URL which is located in .env or create your own here -> https://console.neon.tech/ and change the DB_URL in .env to yours
+8. Create requests at https://www.postman.com/
